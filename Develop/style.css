@@ -1,0 +1,17 @@
+.team-heading {
+    opacity: .65;
+    background-color: seashell;
+    color: black;
+}
+
+
+
+body {
+    background-image: url(https://boulevardla.com/blog/wp-content/uploads/2018/07/boulevard-medical-properties-iStock-840091762-672x372.jpg);
+    background-size: cover;
+}
+
+.employee-card {
+    margin: 20px;
+    background-color: whitesmoke;
+}

@@ -26,14 +26,7 @@ class User {
                 name: "choice",
                 message: "Create employee?"
             }
-        ])
-        .then(val => { 
-            if(val.choice) { 
-                this.beginProcess();
-            } else { 
-                this.quit();
-            }
-        })
+        ]).then(val => {val.choice ? this.beginProcess() : this.quit()})
 
     }
 
@@ -86,7 +79,6 @@ class User {
                         .then(val => { 
                             const git = val["engineer-github"];
                             this.employees.push(new Engineer(name, id, email, git));
-                            console.log(this.employees);
 
                             this.addEmployee();
                         })
@@ -102,7 +94,6 @@ class User {
                 .then(val => { 
                     const school = val["school"];
                     this.employees.push(new Intern(name, id, email, school));
-                    console.log(this.employees);
 
                     this.addEmployee();
                 })
@@ -120,7 +111,6 @@ class User {
                 .then(val => { 
                     const officeNumber = val["office-number"];
                     this.employees.push(new Manager(name, id, email, officeNumber));
-                    console.log(this.employees);
 
                     this.addEmployee();
                 })
@@ -129,16 +119,17 @@ class User {
     }
 
     quit(){ 
-        console.log("Adios Amigos!");
-        console.log(render(this.employees));
+        if(this.employees === []){
+        process.exit(0);
+        } else {
 
         fs.writeFile("team.html", render(this.employees), function(err){ 
             if(err) { 
                 throw err;
             }
-            console.log("Success!!!!");
+        
         })
-    }
+    }}
 
 }
 
@@ -148,84 +139,5 @@ module.exports = User;
 
 x = new User();
 x.addEmployee();
-
-
-// function beginProcess() { 
-// inquirer.prompt([ 
-//     {
-//         type:"input",
-//         name:"employee-name",
-//         message:"Please enter the employee's first name: "
-
-//     },
-//     {
-//         type:"input",
-//         name:"employee-id",
-//         message:"Please enter a valid numeric id"
-//     },
-//     {
-//         type:"input",
-//         name:"employee-email",
-//         message:"Please enter an email address for this employee"
-//     },
-//     {
-//         type:"list",
-//         name:"employee-role",
-//         message: "What is this employee's role?",
-//         choices: ["Engineer", "Intern", "Manager"]
-
-//     }
-// ])
-// .then(val => {
-//    let x = (val["employee-name"]);
-//    const employees = [];
-//    x = new Employee(val["employee-name"], val["employee-id"], val["employee-email"], val["employee-role"]);
-//    const name = (val["employee-name"]);
-//    const id = (val["employee-id"]);
-//    const email = (val["employee-email"]);
-//    const role = (val["employee-role"]);
-   
-//    console.log(x);
-//    employees.push(x);
-   
-
-//   if(role === "Engineer") { 
-//       const test = [];
-//     inquirer.prompt([
-//         {
-//             type: "input",
-//             name: "engineer-github",
-//             message: "Please enter your Github profile name: "
-//         }
-//     ]).then(val =>{ 
-//       let engineers = [];
-//       x = new Engineer(name, id, email, val["engineer-github"]);
-//       engineers.push(x);
-      
-//       render(engineers);
-
-//       write
-//     })
-    
-//   }
-   
-//         // if(val["employee-role"] === Engineer) { 
-//         //     let employees = [new Engineer(val["employee-name"], val["employee-id"], val["employee-email"])];
-//         //     console.log(employees);
-//         // }
-
-//     }
-    
-//     )
-// }
-
-// inquirer.prompt([
-//     {
-//         type: "confirm",
-//         name: "employee",
-//         message: "Render new employee?"
-//     }
-// ])
-// .then(val => {val.employee ? beginProcess() : console.log("Process terminated")})
 
 
